@@ -56,3 +56,63 @@ export default function TicTacToe() {
 }
 ```
 </details>
+
+3*3の盤面を作成してみましょう。
+![3*3盤面](< 3-2.png>)
+
+<details>
+<summary>解答</summary>
+
+```
+export default function TicTacToe() {
+  return (
+    <>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+    </>
+  );
+}
+
+
+```
+</details>
+
+
+buttonタグ3つずつをclassに`board-row`を指定したdivタグで囲んでみましょう。
+![alt text](< 3-3.png>)
+
+<details>
+<summary>解答</summary>
+
+```
+export default function TicTacToe() {
+  return (
+    <>
+      <div className="board-row">
+        <button className="square">X</button>
+        <button className="square">X</button>
+        <button className="square">X</button>
+      </div>
+      <div className="board-row">
+        <button className="square">X</button>
+        <button className="square">X</button>
+        <button className="square">X</button>
+      </div>
+      <div className="board-row">
+        <button className="square">X</button>
+        <button className="square">X</button>
+        <button className="square">X</button>
+      </div>
+    </>
+  );
+}
+
+```
+</details>

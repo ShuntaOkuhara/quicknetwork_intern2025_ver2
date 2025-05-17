@@ -4,6 +4,12 @@ export default function TicTacToe() {
       <button className="square">X</button>
       <button className="square">X</button>
       <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
+      <button className="square">X</button>
     </>
   );
 }
