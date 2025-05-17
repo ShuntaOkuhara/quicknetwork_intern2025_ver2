@@ -1,3 +1,3 @@
 export default function TicTacToe() {
-  return <span>Hello World</span>;
+  return <button className="square">X</button>;
 }
