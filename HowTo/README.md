@@ -120,3 +120,6 @@ export default function TicTacToe() {
 
 ```
 </details>
+
+## buttonタグをXから数字に変更
+buttunタグ内に記載しているXを上から順に1~9までの数字を振ってみましょう
