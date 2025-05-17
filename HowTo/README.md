@@ -23,6 +23,7 @@ export default function TicTacToe() {
 `Hello World`という表示を消して、
 buttonタグを使用し、Xというボタンを表示させましょう。
 また、buttonタグにはclassに`square`を使用してください。
+
 ![マス目の表示](< 2.png>)
 
 <details>
@@ -39,6 +40,7 @@ export default function TicTacToe() {
 
 ## 盤面の作成
 Xというボタンを横に3つ並べましょう。
+
 ![ボタンを3つ並べる](< 3-1.png>)
 
 <details>
@@ -58,6 +60,7 @@ export default function TicTacToe() {
 </details>
 
 3*3の盤面を作成してみましょう。
+
 ![3*3盤面](< 3-2.png>)
 
 <details>
@@ -86,6 +89,7 @@ export default function TicTacToe() {
 
 
 buttonタグ3つずつをclassに`board-row`を指定したdivタグで囲んでみましょう。
+
 ![alt text](< 3-3.png>)
 
 <details>
