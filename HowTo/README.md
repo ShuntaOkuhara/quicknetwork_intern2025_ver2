@@ -123,3 +123,56 @@ export default function TicTacToe() {
 
 ## buttonタグをXから数字に変更
 buttunタグ内に記載しているXを上から順に1~9までの数字を振ってみましょう
+
+
+## コンポーネント切り出し
+`<button className="square">X</button>`というコードが複数回出てきており、
+これ以上増やす場合にもコピペが必要です。
+そこで、コンポーネントとして切り出してみましょう。
+
+Squareというコンポーネントを作成し、それを呼び出すようにしてみましょう。
+
+1と表示しているボタンを切り出した場合
+
+![コンポーネント切り出し](< 4-1.png>)
+
+<details>
+<summary>解答</summary>
+
+src/components/Square/index.tsx
+```
+export function Square() {
+  return <button className="square">1</button>;
+}
+```
+
+src/app/tic-tac-toe/page.tsx
+```
+import { Square } from "@/components/Square";
+
+export default function TicTacToe() {
+  return (
+    <>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+    </>
+  );
+}
+```
+</details>
+
+Propsでボタンの表示数字を設定できるようにする
+
