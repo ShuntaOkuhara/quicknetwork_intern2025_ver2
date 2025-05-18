@@ -6,11 +6,18 @@ import { Square } from "@/components/Square";
 
 export default function TicTacToe() {
   const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
 
   function handleClick(i: number) {
+    if (squares[i]) return;
     const nextSquares = squares.slice();
-    nextSquares[i] = "X";
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "○";
+    }
     setSquares(nextSquares);
+    setXIsNext(!xIsNext);
   }
 
   return (
