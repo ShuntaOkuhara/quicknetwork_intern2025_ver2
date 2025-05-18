@@ -250,3 +250,61 @@ export function Square({ value }: Props) {
 
 ```
 </details>
+
+
+押したボタンの箇所にXが表示されるようにしましょう。
+
+![押したところに値を置く](< 5-2.png>)
+
+<details>
+<summary>解答</summary>
+
+src/components/Square/index.tsx
+```
+"use client";
+
+import { useState } from "react";
+
+export function Square() {
+  const [value, setValue] = useState<string | null>(null);
+
+  function handleClick() {
+    setValue("X");
+  }
+
+  return (
+    <button className="square" onClick={handleClick}>
+      {value}
+    </button>
+  );
+}
+
+```
+
+src/app/tic-tac-toe/page.tsx
+```
+import { Square } from "@/components/Square";
+
+export default function TicTacToe() {
+  return (
+    <>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+      <div className="board-row">
+        <Square />
+        <Square />
+        <Square />
+      </div>
+    </>
+  );
+}
+```
+</details>

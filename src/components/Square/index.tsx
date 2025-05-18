@@ -1,12 +1,12 @@
 "use client";
 
-type Props = {
-  value: string;
-};
+import { useState } from "react";
 
-export function Square({ value }: Props) {
+export function Square() {
+  const [value, setValue] = useState<string | null>(null);
+
   function handleClick() {
-    console.log(value + " clicked");
+    setValue("X");
   }
 
   return (
