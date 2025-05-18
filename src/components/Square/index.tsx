@@ -1,16 +1,11 @@
-"use client";
+type Props = {
+  value: string;
+  onClick: () => void;
+};
 
-import { useState } from "react";
-
-export function Square() {
-  const [value, setValue] = useState<string | null>(null);
-
-  function handleClick() {
-    setValue("X");
-  }
-
+export function Square({ value, onClick }: Props) {
   return (
-    <button className="square" onClick={handleClick}>
+    <button className="square" onClick={onClick}>
       {value}
     </button>
   );
