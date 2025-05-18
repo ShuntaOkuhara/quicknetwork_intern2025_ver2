@@ -1,7 +1,17 @@
+"use client";
+
 type Props = {
   value: string;
 };
 
 export function Square({ value }: Props) {
-  return <button className="square">{value}</button>;
+  function handleClick() {
+    console.log(value + " clicked");
+  }
+
+  return (
+    <button className="square" onClick={handleClick}>
+      {value}
+    </button>
+  );
 }

@@ -218,3 +218,35 @@ export default function TicTacToe() {
 
 ```
 </details>
+
+## ボタンを押したときのアクションをつける
+数字のボタンを押したときに "押した数字 clicked"とコンソールに表示させるようにする。
+8を押した場合は、"8 clicked"とコンソールに表示される。
+
+![ボタンアクションコンソール表示](< 5-1.png>)
+
+<details>
+<summary>解答</summary>
+
+src/components/Square/index.tsx
+```
+"use client";
+
+type Props = {
+  value: string;
+};
+
+export function Square({ value }: Props) {
+  function handleClick() {
+    console.log(value + " clicked");
+  }
+
+  return (
+    <button className="square" onClick={handleClick}>
+      {value}
+    </button>
+  );
+}
+
+```
+</details>
