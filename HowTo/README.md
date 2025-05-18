@@ -13,6 +13,9 @@
 - [追加課題](#追加課題)
     - [勝者判定ロジックを定数定義ではなくする](#勝者判定ロジックを定数定義ではなくする)
     - [拡張しやすいようにする](#拡張しやすいようにする)
+        - [二次元配列への書き換え](#二次元配列への書き換え)
+        - [mapに書き換え](#mapに書き換え)
+        - [定数定義の変更で拡張](#定数定義の変更で拡張)
 
 
 # 三目並べ (Tic-Tac-Toe) 作成手順
@@ -693,6 +696,7 @@ function calculateWinner(squares: string[]) {
 </details>
 
 ## 拡張しやすいようにする
+### 二次元配列への書き換え
 squaresは現状1次元配列であるため、一つ前の判定ロジックは複雑になってしまった。
 
 そこで、squaresを二次元配列にすることによってコードが簡潔にならないだろうか。
@@ -801,6 +805,7 @@ export default function TicTacToe() {
 ```
 </details>
 
+### mapに書き換え
 二次元配列にしたことによって、以下の部分をもっと簡単に書ける方法があります。考えてみましょう。
 
 *二次元配列にする前でも簡単に書くこと自体は可能でした。
@@ -843,7 +848,121 @@ src/app/tic-tac-toe/page.tsx
     </>
   );
 ```
+</details>
 
+### 定数定義の変更で拡張
 SQUARE_SIZE = 3という定数を定義し、
 ここの値を5にすると5かける5の盤面のゲームになるようにしましょう。
+
+<details>
+<summary>解答</summary>
+
+src/app/tic-tac-toe/page.tsx
+```
+"use client";
+
+import { useState } from "react";
+
+import { Square } from "@/components/Square";
+
+const SQUARE_SIZE = 3;
+
+function calculateWinner(squares: string[][]) {
+  // 横列の確認
+  for (let i = 0; i < SQUARE_SIZE; i++) {
+    if (
+      squares[i][0] &&
+      squares[i][0] === squares[i][1] &&
+      squares[i][0] === squares[i][2]
+    ) {
+      return squares[i][0];
+    }
+  }
+  // 縦列の確認
+  for (let i = 0; i < SQUARE_SIZE; i++) {
+    if (
+      squares[0][i] &&
+      squares[0][i] === squares[1][i] &&
+      squares[0][i] === squares[2][i]
+    ) {
+      return squares[0][i];
+    }
+  }
+  // 斜めの確認
+  // 左上から右下
+  const leftToRight = squares[0][0];
+  if (leftToRight) {
+    let isWon = true;
+    for (let i = 1; i < SQUARE_SIZE; i++) {
+      if (squares[i][i] !== leftToRight) {
+        isWon = false;
+        break;
+      }
+    }
+    if (isWon) return leftToRight;
+  }
+  // 右上から左下
+  const rightToLeft = squares[0][SQUARE_SIZE - 1];
+  if (rightToLeft) {
+    let isWon = true;
+    for (let i = 1; i < SQUARE_SIZE; i++) {
+      if (squares[i][SQUARE_SIZE - 1 - i] !== rightToLeft) {
+        isWon = false;
+        break;
+      }
+    }
+    if (isWon) return rightToLeft;
+  }
+
+  return null;
+}
+
+export default function TicTacToe() {
+  const [squares, setSquares] = useState(
+    Array(SQUARE_SIZE)
+      .fill(null)
+      .map(() => Array(SQUARE_SIZE).fill(null))
+  );
+  const [xIsNext, setXIsNext] = useState(true);
+
+  function handleClick(row: number, col: number) {
+    if (squares[row][col] || calculateWinner(squares)) return;
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[row][col] = "X";
+    } else {
+      nextSquares[row][col] = "○";
+    }
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  }
+
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "○");
+  }
+
+  return (
+    <>
+      <div className="status">{status}</div>
+      {Array.from({ length: SQUARE_SIZE }, (_, row) => (
+        <div key={row} className="board-row">
+          {Array.from({ length: SQUARE_SIZE }, (_, col) => (
+            <Square
+              key={col}
+              value={squares[row][col]}
+              onClick={() => handleClick(row, col)}
+            />
+          ))}
+        </div>
+      ))}
+    </>
+  );
+}
+
+```
+</details>
 
