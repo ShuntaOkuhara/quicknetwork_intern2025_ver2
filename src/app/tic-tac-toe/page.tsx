@@ -75,21 +75,17 @@ export default function TicTacToe() {
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">
-        <Square value={squares[0][0]} onClick={() => handleClick(0, 0)} />
-        <Square value={squares[0][1]} onClick={() => handleClick(0, 1)} />
-        <Square value={squares[0][2]} onClick={() => handleClick(0, 2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[1][0]} onClick={() => handleClick(1, 0)} />
-        <Square value={squares[1][1]} onClick={() => handleClick(1, 1)} />
-        <Square value={squares[1][2]} onClick={() => handleClick(1, 2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[2][0]} onClick={() => handleClick(2, 0)} />
-        <Square value={squares[2][1]} onClick={() => handleClick(2, 1)} />
-        <Square value={squares[2][2]} onClick={() => handleClick(2, 2)} />
-      </div>
+      {Array.from({ length: 3 }, (_, row) => (
+        <div key={row} className="board-row">
+          {Array.from({ length: 3 }, (_, col) => (
+            <Square
+              key={col}
+              value={squares[row][col]}
+              onClick={() => handleClick(row, col)}
+            />
+          ))}
+        </div>
+      ))}
     </>
   );
 }
