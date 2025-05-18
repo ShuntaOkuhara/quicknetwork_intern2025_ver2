@@ -4,49 +4,61 @@ import { useState } from "react";
 
 import { Square } from "@/components/Square";
 
-function calculateWinner(squares: string[]) {
+function calculateWinner(squares: string[][]) {
   // 横列の確認
   for (let i = 0; i < 3; i++) {
     if (
-      squares[i * 3] &&
-      squares[i * 3] === squares[i * 3 + 1] &&
-      squares[i * 3] === squares[i * 3 + 2]
+      squares[i][0] &&
+      squares[i][0] === squares[i][1] &&
+      squares[i][0] === squares[i][2]
     ) {
-      return squares[i * 3];
+      return squares[i][0];
     }
   }
   // 縦列の確認
   for (let i = 0; i < 3; i++) {
     if (
-      squares[i] &&
-      squares[i] === squares[i + 3] &&
-      squares[i] === squares[i + 6]
+      squares[0][i] &&
+      squares[0][i] === squares[1][i] &&
+      squares[0][i] === squares[2][i]
     ) {
-      return squares[i];
+      return squares[0][i];
     }
   }
   // 斜めの確認
-  if (squares[0] && squares[0] === squares[4] && squares[0] === squares[8]) {
-    return squares[0];
+  if (
+    squares[0][0] &&
+    squares[0][0] === squares[1][1] &&
+    squares[0][0] === squares[2][2]
+  ) {
+    return squares[0][0];
   }
-  if (squares[2] && squares[2] === squares[4] && squares[2] === squares[6]) {
-    return squares[2];
+  if (
+    squares[0][2] &&
+    squares[0][2] === squares[1][1] &&
+    squares[0][2] === squares[2][0]
+  ) {
+    return squares[0][2];
   }
 
   return null;
 }
 
 export default function TicTacToe() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [squares, setSquares] = useState(
+    Array(3)
+      .fill(null)
+      .map(() => Array(3).fill(null))
+  );
   const [xIsNext, setXIsNext] = useState(true);
 
-  function handleClick(i: number) {
-    if (squares[i] || calculateWinner(squares)) return;
+  function handleClick(row: number, col: number) {
+    if (squares[row][col] || calculateWinner(squares)) return;
     const nextSquares = squares.slice();
     if (xIsNext) {
-      nextSquares[i] = "X";
+      nextSquares[row][col] = "X";
     } else {
-      nextSquares[i] = "○";
+      nextSquares[row][col] = "○";
     }
     setSquares(nextSquares);
     setXIsNext(!xIsNext);
@@ -64,19 +76,19 @@ export default function TicTacToe() {
     <>
       <div className="status">{status}</div>
       <div className="board-row">
-        <Square value={squares[0]} onClick={() => handleClick(0)} />
-        <Square value={squares[1]} onClick={() => handleClick(1)} />
-        <Square value={squares[2]} onClick={() => handleClick(2)} />
+        <Square value={squares[0][0]} onClick={() => handleClick(0, 0)} />
+        <Square value={squares[0][1]} onClick={() => handleClick(0, 1)} />
+        <Square value={squares[0][2]} onClick={() => handleClick(0, 2)} />
       </div>
       <div className="board-row">
-        <Square value={squares[3]} onClick={() => handleClick(3)} />
-        <Square value={squares[4]} onClick={() => handleClick(4)} />
-        <Square value={squares[5]} onClick={() => handleClick(5)} />
+        <Square value={squares[1][0]} onClick={() => handleClick(1, 0)} />
+        <Square value={squares[1][1]} onClick={() => handleClick(1, 1)} />
+        <Square value={squares[1][2]} onClick={() => handleClick(1, 2)} />
       </div>
       <div className="board-row">
-        <Square value={squares[6]} onClick={() => handleClick(6)} />
-        <Square value={squares[7]} onClick={() => handleClick(7)} />
-        <Square value={squares[8]} onClick={() => handleClick(8)} />
+        <Square value={squares[2][0]} onClick={() => handleClick(2, 0)} />
+        <Square value={squares[2][1]} onClick={() => handleClick(2, 1)} />
+        <Square value={squares[2][2]} onClick={() => handleClick(2, 2)} />
       </div>
     </>
   );
