@@ -11,7 +11,7 @@
     - [勝者ができたら、ゲームが終了するようにしましょう。](#勝者ができたらゲームが終了するようにしましょう)
     - [勝者または次の番のプレイヤーを表示させる。](#勝者または次の番のプレイヤーを表示させる)
 - [追加課題](#追加課題)
-    - [勝者](#勝者)
+    - [勝者判定ロジックを定数定義ではなくする](#勝者判定ロジックを定数定義ではなくする)
 
 
 # 三目並べ (Tic-Tac-Toe) 作成手順
@@ -632,5 +632,61 @@ export default function TicTacToe() {
   );
 }
 
+```
+</details>
+
+# 追加課題
+## 勝者判定ロジックを定数定義ではなくする
+勝者判定ロジックを以下のように定数で定義していますが、
+これをfor文を使用するなどして、定数で定義しなくても良いようにしましょう。
+```
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+```
+
+<details>
+<summary>解答</summary>
+
+src/app/tic-tac-toe/page.tsx
+```
+function calculateWinner(squares: string[]) {
+  // 横列の確認
+  for (let i = 0; i < 3; i++) {
+    if (
+      squares[i * 3] &&
+      squares[i * 3] === squares[i * 3 + 1] &&
+      squares[i * 3] === squares[i * 3 + 2]
+    ) {
+      return squares[i * 3];
+    }
+  }
+  // 縦列の確認
+  for (let i = 0; i < 3; i++) {
+    if (
+      squares[i] &&
+      squares[i] === squares[i + 3] &&
+      squares[i] === squares[i + 6]
+    ) {
+      return squares[i];
+    }
+  }
+  // 斜めの確認
+  if (squares[0] && squares[0] === squares[4] && squares[0] === squares[8]) {
+    return squares[0];
+  }
+  if (squares[2] && squares[2] === squares[4] && squares[2] === squares[6]) {
+    return squares[2];
+  }
+
+  return null;
+}
 ```
 </details>

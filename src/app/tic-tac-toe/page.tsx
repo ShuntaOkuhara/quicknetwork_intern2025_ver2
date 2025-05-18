@@ -5,22 +5,34 @@ import { useState } from "react";
 import { Square } from "@/components/Square";
 
 function calculateWinner(squares: string[]) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+  // 横列の確認
+  for (let i = 0; i < 3; i++) {
+    if (
+      squares[i * 3] &&
+      squares[i * 3] === squares[i * 3 + 1] &&
+      squares[i * 3] === squares[i * 3 + 2]
+    ) {
+      return squares[i * 3];
     }
   }
+  // 縦列の確認
+  for (let i = 0; i < 3; i++) {
+    if (
+      squares[i] &&
+      squares[i] === squares[i + 3] &&
+      squares[i] === squares[i + 6]
+    ) {
+      return squares[i];
+    }
+  }
+  // 斜めの確認
+  if (squares[0] && squares[0] === squares[4] && squares[0] === squares[8]) {
+    return squares[0];
+  }
+  if (squares[2] && squares[2] === squares[4] && squares[2] === squares[6]) {
+    return squares[2];
+  }
+
   return null;
 }
 
