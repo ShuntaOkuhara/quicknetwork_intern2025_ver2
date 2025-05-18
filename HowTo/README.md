@@ -1,3 +1,19 @@
+- [三目並べ (Tic-Tac-Toe) 作成手順](#三目並べ-tic-tac-toe-作成手順)
+    - [ページの作成](#ページの作成)
+    - [マス目を表示](#マス目を表示)
+    - [盤面の作成](#盤面の作成)
+    - [buttonタグをXから数字に変更](#buttonタグをxから数字に変更)
+    - [コンポーネント切り出し](#コンポーネント切り出し)
+    - [ボタンを押したときのアクションをつける](#ボタンを押したときのアクションをつける)
+    - [squareを親コンポーネントで全て管理できるようにする](#squareを親コンポーネントで全て管理できるようにする)
+    - [手番の切り替え](#手番の切り替え)
+    - [同じマスを上書きできないようにする](#同じマスを上書きできないようにする)
+    - [勝者ができたら、ゲームが終了するようにしましょう。](#勝者ができたらゲームが終了するようにしましょう)
+    - [勝者または次の番のプレイヤーを表示させる。](#勝者または次の番のプレイヤーを表示させる)
+- [追加課題](#追加課題)
+    - [勝者](#勝者)
+
+
 # 三目並べ (Tic-Tac-Toe) 作成手順
 
 ## ページの作成
@@ -510,6 +526,93 @@ export default function TicTacToe() {
 
   return (
     <>
+      <div className="board-row">
+        <Square value={squares[0]} onClick={() => handleClick(0)} />
+        <Square value={squares[1]} onClick={() => handleClick(1)} />
+        <Square value={squares[2]} onClick={() => handleClick(2)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]} onClick={() => handleClick(3)} />
+        <Square value={squares[4]} onClick={() => handleClick(4)} />
+        <Square value={squares[5]} onClick={() => handleClick(5)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onClick={() => handleClick(6)} />
+        <Square value={squares[7]} onClick={() => handleClick(7)} />
+        <Square value={squares[8]} onClick={() => handleClick(8)} />
+      </div>
+    </>
+  );
+}
+
+```
+</details>
+
+## 勝者または次の番のプレイヤーを表示させる。
+ゲームが終了した場合には、"Winner: X"または"Winner: ○"を表示させる。
+
+まだ、勝者がいない場合は、次の番のプレイヤーを"Next Player: X"または"Next Player: ○"と表示させましょう。
+
+表示の際はdivタグで囲み、statusというclassを指定しましょう。
+
+<details>
+<summary>解答</summary>
+
+src/app/tic-tac-toe/page.tsx
+```
+"use client";
+
+import { useState } from "react";
+
+import { Square } from "@/components/Square";
+
+function calculateWinner(squares: string[]) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
+    }
+  }
+  return null;
+}
+
+export default function TicTacToe() {
+  const [squares, setSquares] = useState(Array(9).fill(null));
+  const [xIsNext, setXIsNext] = useState(true);
+
+  function handleClick(i: number) {
+    if (squares[i] || calculateWinner(squares)) return;
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "○";
+    }
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  }
+
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "○");
+  }
+
+  return (
+    <>
+      <div className="status">{status}</div>
       <div className="board-row">
         <Square value={squares[0]} onClick={() => handleClick(0)} />
         <Square value={squares[1]} onClick={() => handleClick(1)} />
