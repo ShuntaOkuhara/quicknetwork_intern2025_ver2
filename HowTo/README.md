@@ -1,32 +1,64 @@
+- [進め方](#進め方)
 - [三目並べ (Tic-Tac-Toe) 作成手順](#三目並べ-tic-tac-toe-作成手順)
-    - [ページの作成](#ページの作成)
-    - [マス目を表示](#マス目を表示)
-    - [盤面の作成](#盤面の作成)
-    - [buttonタグをXから数字に変更](#buttonタグをxから数字に変更)
-    - [コンポーネント切り出し](#コンポーネント切り出し)
-    - [ボタンを押したときのアクションをつける](#ボタンを押したときのアクションをつける)
-    - [squareを親コンポーネントで全て管理できるようにする](#squareを親コンポーネントで全て管理できるようにする)
-    - [手番の切り替え](#手番の切り替え)
-    - [同じマスを上書きできないようにする](#同じマスを上書きできないようにする)
-    - [勝者ができたら、ゲームが終了するようにしましょう。](#勝者ができたらゲームが終了するようにしましょう)
-    - [勝者または次の番のプレイヤーを表示させる。](#勝者または次の番のプレイヤーを表示させる)
+  - [ページの作成](#ページの作成)
+  - [マス目を表示](#マス目を表示)
+  - [マス目を並べる](#マス目を並べる)
+  - [3\*3盤面を作成する](#33盤面を作成する)
+  - [buttonタグをXから数字に変更](#buttonタグをxから数字に変更)
+  - [コンポーネント切り出し](#コンポーネント切り出し)
+  - [ボタンのラベルを変えれるようにする](#ボタンのラベルを変えれるようにする)
+  - [ボタンを押したときのアクションをつける](#ボタンを押したときのアクションをつける)
+  - [押したボタンの箇所にXが表示される](#押したボタンの箇所にxが表示される)
+  - [ボタン(Squareコンポーネント)の状態を親コンポーネントで管理する](#ボタンsquareコンポーネントの状態を親コンポーネントで管理する)
+  - [手番の切り替え](#手番の切り替え)
+  - [同じマスを上書きできないようにする](#同じマスを上書きできないようにする)
+  - [勝者ができたら、ゲームが終了するようにしましょう。](#勝者ができたらゲームが終了するようにしましょう)
+  - [勝者または次の番のプレイヤーを表示させる。](#勝者または次の番のプレイヤーを表示させる)
 - [追加課題](#追加課題)
-    - [勝者判定ロジックを定数定義ではなくする](#勝者判定ロジックを定数定義ではなくする)
-    - [拡張しやすいようにする](#拡張しやすいようにする)
-        - [二次元配列への書き換え](#二次元配列への書き換え)
-        - [mapに書き換え](#mapに書き換え)
-        - [定数定義の変更で拡張](#定数定義の変更で拡張)
+  - [勝者判定ロジックを定数定義ではなくする](#勝者判定ロジックを定数定義ではなくする)
+  - [拡張しやすいようにする](#拡張しやすいようにする)
+    - [二次元配列への書き換え](#二次元配列への書き換え)
+    - [mapに書き換え](#mapに書き換え)
+    - [定数定義の変更で拡張](#定数定義の変更で拡張)
 
+<details>
+<summary>前提の注意書き</summary>
+
+classに特定の値が指定された場合にレイアウトやデザインが適用されるように設定しています。
+
+そのため、指示のあるclass指定は必ず行なってください。
+
+詳しく知りたい方は`src/app/globals.css`をみて、何が書かれているかを調べてみてください。
+
+<details>
+<summary>知っておくと良いこと</summary>
+
+- CSSとは
+- CSSにおけるclass指定
+</details>
+
+</details>
+
+# 進め方
+- ChatGPTなどのAIに質問し、それを参考にプログラムを書く
+- 追加実装する際はこのコードを〇〇するように修正してという
 
 # 三目並べ (Tic-Tac-Toe) 作成手順
 
 ## ページの作成
-http://localhost:3000/tic-tac-toe
-上記ページにアクセスしたときに`Hello World`を表示させましょう
+- http://localhost:3000/tic-tac-toe アクセス時に閲覧可能
+- `Hello World`を表示
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- Next.jsにおける新規ページの作成方法
+</details>
 
 <details>
 <summary>解答</summary>
 
+src/app/tic-tac-toe/page.tsx
 ```
 export default function TicTacToe() {
   return (
@@ -36,19 +68,24 @@ export default function TicTacToe() {
 ```
 </details>
 
-<!-- TODO -->
-<!-- Nextの新規ページ作成方法の説明 -->
-
 ## マス目を表示
-`Hello World`という表示を消して、
-buttonタグを使用し、Xというボタンを表示させましょう。
-また、buttonタグにはclassに`square`を使用してください。
+- `Hello World`という表示を削除
+- buttonタグを使用し、Xというボタンを表示作成
+- buttonタグにはclassに`square`を指定
 
 ![マス目の表示](< 2.png>)
 
 <details>
+<summary>調べてほしいこと</summary>
+
+- buttonタグとは何か、使い方
+- classとは何か、Next.jsにおけるclassの指定方法
+</details>
+
+<details>
 <summary>解答</summary>
 
+src/app/tic-tac-toe/page.tsx
 ```
 export default function TicTacToe() {
   return (
@@ -58,14 +95,15 @@ export default function TicTacToe() {
 ```
 </details>
 
-## 盤面の作成
-Xというボタンを横に3つ並べましょう。
+## マス目を並べる
+- 先ほど作成したXというボタンと同じものを3つ並べる
 
 ![ボタンを3つ並べる](< 3-1.png>)
 
 <details>
 <summary>解答</summary>
 
+src/app/tic-tac-toe/page.tsx
 ```
 export default function TicTacToe() {
   return (
@@ -79,13 +117,15 @@ export default function TicTacToe() {
 ```
 </details>
 
-3*3の盤面を作成してみましょう。
+## 3*3盤面を作成する
+- まずは、マス目を9個作る
 
 ![3*3盤面](< 3-2.png>)
 
 <details>
 <summary>解答</summary>
 
+src/app/tic-tac-toe/page.tsx
 ```
 export default function TicTacToe() {
   return (
@@ -107,14 +147,22 @@ export default function TicTacToe() {
 ```
 </details>
 
+buttonを9つにしただけでは、横に並ぶだけで、3*3の盤面にはなりません。
 
 buttonタグ3つずつをclassに`board-row`を指定したdivタグで囲んでみましょう。
 
-![alt text](< 3-3.png>)
+![マス目を9個並べる](< 3-3.png>)
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- divタグとは何か
+</details>
 
 <details>
 <summary>解答</summary>
 
+src/app/tic-tac-toe/page.tsx
 ```
 export default function TicTacToe() {
   return (
@@ -142,7 +190,7 @@ export default function TicTacToe() {
 </details>
 
 ## buttonタグをXから数字に変更
-buttunタグ内に記載しているXを上から順に1~9までの数字を振ってみましょう
+buttunタグ内に記載しているXを上から順に1~9までの数字を振ってみて、どのような順にマスが並んでいるかコードと見比べながら確かめてみましょう。
 
 
 ## コンポーネント切り出し
@@ -150,11 +198,21 @@ buttunタグ内に記載しているXを上から順に1~9までの数字を振�
 これ以上増やす場合にもコピペが必要です。
 そこで、コンポーネントとして切り出してみましょう。
 
-Squareというコンポーネントを作成し、それを呼び出すようにしてみましょう。
+- Squareというコンポーネントを作成
+- Squareコンポーネントを呼び出す
+- `<button className="square">X</button>`の部分を一つのコンポーネントとして切り出す
 
 1と表示しているボタンを切り出した場合
 
 ![コンポーネント切り出し](< 4-1.png>)
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- コンポーネントとは
+- コンポーネントの定義の仕方
+- コンポーネントの呼び出し方
+</details>
 
 <details>
 <summary>解答</summary>
@@ -194,7 +252,18 @@ export default function TicTacToe() {
 ```
 </details>
 
-Propsでボタンの表示数字を設定できるようにする
+## ボタンのラベルを変えれるようにする
+場所によって、数字をつけれるようにしたいです。
+
+[buttonタグをXから数字に変更](#buttonタグをxから数字に変更)で作成したように、1~9までの番号が表示されるようにしましょう。
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- Propsとは
+- Propsの書き方
+- Propsに値を渡す書き方
+</details>
 
 <details>
 <summary>解答</summary>
@@ -240,10 +309,42 @@ export default function TicTacToe() {
 </details>
 
 ## ボタンを押したときのアクションをつける
-数字のボタンを押したときに "押した数字 clicked"とコンソールに表示させるようにする。
-8を押した場合は、"8 clicked"とコンソールに表示される。
+- 数字のボタンを押したときに "押した数字 clicked"とコンソールに表示
+  - 8を押した場合は、"8 clicked"とコンソールに表示される。
+
+<details>
+<summary>コンソールの表示方法</summary>
+
+詳細は自分で調べてください。コンソールとはどこかだけ把握しておいてください。
+
+Chromeの場合
+1. 右上の3点リーダを押す
+2. その他のツールを押す
+3. ディベロッパーツールを押す
+
+safariの場合
+1. 左上のSafariを押す(リンゴマークの隣)
+2. 設定を開く
+3. 詳細タブに移動
+4. Webディベロッパ用の機能を表示にチェックを入れる
+5. 上の開発タブ(リンゴマークのある一番上のところの中)で開発を押す
+6. Javascriptコンソールを表示を押す
+
+Microsoft Edgeの場合
+1. 右上の3点リーダを押す
+2. その他のツールを押す
+3. 開発者ツールを押す
+
+</details>
 
 ![ボタンアクションコンソール表示](< 5-1.png>)
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- Next.jsでのコンソールへの値の出力方法
+- ボタンを押した時に何かしらの処理が行えるようにする方法
+</details>
 
 <details>
 <summary>解答</summary>
@@ -272,9 +373,16 @@ export function Square({ value }: Props) {
 </details>
 
 
-押したボタンの箇所にXが表示されるようにしましょう。
+## 押したボタンの箇所にXが表示される
+- マス目を押した時に、そのマス目にXが表示される
 
 ![押したところに値を置く](< 5-2.png>)
+
+<details>
+<summary>調べてほしいこと</summary>
+
+- useStateとは何か
+</details>
 
 <details>
 <summary>解答</summary>
@@ -329,11 +437,15 @@ export default function TicTacToe() {
 ```
 </details>
 
-## squareを親コンポーネントで全て管理できるようにする
-今の状態では、それぞれのボタンの状態は管理できているが、
-ボタン同士の状態を一気に判定することは難しい。
+## ボタン(Squareコンポーネント)の状態を親コンポーネントで管理する
+今の状態では、それぞれのボタンの状態は管理できている(押したところにXを表示させれる)が、
+ボタン同士の状態を元に判定することは難しい。
 
-そのため、Squareの呼び出しもとでstateの管理をするようにしましょう。
+例えば、勝者判定となるXが横一列に並んでいるかをSquareコンポーネントを呼び出しているファイル内で行うのは難しい。
+
+Squareコンポーネントの呼び出しもとで状態管理をするようにしましょう。
+
+言い換えれば、useStateを用いてSquareコンポーネント内に実装したクリックした時に行われる処理をSquareコンポーネントを呼び出しているpage.tsx内に書き移しましょう。
 
 <details>
 <summary>解答</summary>
@@ -400,7 +512,7 @@ export default function TicTacToe() {
 Xの番なのか、○の番なのかを管理しておくstateを作成しましょう。
 また、その値に応じて、マス目に入る値をXか○かを切り替えましょう。
 
-![alt text](< 6-1.png>)
+![手番の切り替え](< 6-1.png>)
 
 <details>
 <summary>解答</summary>
