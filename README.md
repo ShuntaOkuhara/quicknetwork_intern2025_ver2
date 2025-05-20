@@ -48,6 +48,11 @@ node -v
 npm -v
 ```
 
+プロジェクトをcloneする。
+```bash
+git clone https://github.com/ShuntaOkuhara/quicknetwork_intern2025_ver2.git
+```
+
 参考：　https://qiita.com/sakana_hug/items/7440df68734f3d5ce772
 https://nodejs.org/ja
 
