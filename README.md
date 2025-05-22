@@ -6,7 +6,7 @@
 - [環境構築](#環境構築)
     - [Mac](#mac)
     - [Windows](#windows)
-    - [サーバーの起動](#サーバーの起動)
+    - [vscodeでプロジェクトを開く](#vscodeでプロジェクトを開く)
     - [ページ確認](#ページ確認)
 
 
@@ -98,16 +98,16 @@ sudo apt install npm
 git clone https://github.com/ShuntaOkuhara/quicknetwork_intern2025_ver2.git
 ```
 
-### サーバーの起動
-ダウンロードが完了したら
-```
-cd quicknetwork_intern2025_ver2/src
-```
-
-```
-npm i
-npm run dev
-```
+### vscodeでプロジェクトを開く
+1. vscodeを起動
+2. 左上の紙が2枚重なっているアイコンを押す
+3. フォルダを開くを押す
+4. quicknetwork_intern2025_ver2というディレクトリを開く(基本的にはhomeの中にある)
+5. 開けたら、上のバーのターミナルを押す
+6. new Terminalを押す
+7. ターミナル内で `cd src`を実行
+8. `npm i`を実行.インストールが始まるはず
+9. `npm run dev`を実行
 
 ### ページ確認
 http://localhost:3000/
